@@ -22,8 +22,7 @@ public class ResourceDiscoveryController {
 	    	String url = "http://10.10.10.104:8000/catalog/resources";
 	    	String sensorValue = restTemplate.getForObject(url, String.class); //Obter dados da InterSCity
 	    	
-	    	try {// Iterar sobre cada item retornado no arquivo JSON
-	            // Parse do JSON para um objeto JSONObject
+	    	try {
 	            JSONObject jsonObject = new JSONObject(sensorValue);
 
 	            // Obter o array "resources" do JSON
@@ -77,8 +76,8 @@ public class ResourceDiscoveryController {
 		public void errorInjectionFunction(String sensorValue) {
 			RestTemplate restTemplate = new RestTemplate();
 			String storedResource = restTemplate.getForObject("http://localhost:4000/resources", String.class); 
-			System.out.println("Recursos previamente cadastrados no LapesFi: " + storedResource); //Por enquanto mostrando dados no prompt
-			String endpointUrl = "http://localhost:4000/resources";
+			System.out.println("Recursos previamente cadastrados no LapesFi: " + storedResource);
+			String endpointUrl = "http://localhost:4000/resources"; \\Acessando LapesFI
 			String jsonString = "{\n" +
 			        "  \"description\": \"Environment Monitor\",\n" +
 			        "  \"capabilities\": [\n" +
