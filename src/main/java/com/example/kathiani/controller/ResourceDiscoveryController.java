@@ -76,7 +76,7 @@ public class ResourceDiscoveryController {
         	} catch (Exception e) {
           	    e.printStackTrace();
         	}
-			
+			//Enviando dados apenas com determinado UUId
 	    	return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" + formattedString.toString();		
 	    }
 
