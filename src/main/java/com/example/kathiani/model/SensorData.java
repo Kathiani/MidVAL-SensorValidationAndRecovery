@@ -1,5 +1,7 @@
+package com.example.kathiani.model;
 import java.util.List;
 
+//@Document(collection = "data")
 public class SensorData {
     private int id;
     private String uri;

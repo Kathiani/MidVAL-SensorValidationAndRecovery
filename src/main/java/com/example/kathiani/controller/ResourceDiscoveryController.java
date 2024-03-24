@@ -1,28 +1,18 @@
 package com.example.kathiani.controller;
-
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gwt.user.client.rpc.core.java.util.Arrays;
-
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import org.springframework.ui.Model;
 
-import com.example.kathiani.model.SensorData;
+
 
 @RestController
 public class ResourceDiscoveryController {
@@ -35,14 +25,9 @@ public class ResourceDiscoveryController {
 			RestTemplate restTemplate = new RestTemplate();
 	    	String url = "http://10.10.10.104:8000/catalog/resources";
 	        try {
-				// Fazer a solicitação HTTP GET e receber a resposta como uma string JSON
-				jsonResponse = restTemplate.getForObject(url, String.class);
-
-				// Usar Jackson para desserializar o JSON em um objeto JsonNode
+				jsonResponse = restTemplate.getForObject(url, String.class);		
 				ObjectMapper objectMapper = new ObjectMapper();
 				JsonNode rootNode = objectMapper.readTree(jsonResponse);
-
-				// Obter o valor do campo "uuid"
 				uuid = rootNode.get("resources").get(0).get("uuid").asText();
 
 				// Imprimir o UUID
@@ -57,30 +42,34 @@ public class ResourceDiscoveryController {
 	    	//sendtoApplication(validatedSensor);  //Envia dado para aplicação 
 	    	//return "logmid";
 			
-
-
 			try {
-            // Usar Jackson para analisar a string JSON em um array de objetos JsonNode
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode[] jsonNodes = objectMapper.readValue(returnErrorData, JsonNode[].class);
-
-            // Iterar sobre os elementos da lista
-			 formattedString = new StringBuilder();
+				ObjectMapper objectMapper = new ObjectMapper();
+				JsonNode[] jsonNodes = objectMapper.readValue(returnErrorData, JsonNode[].class);
+			    formattedString = new StringBuilder();
             for (JsonNode node : jsonNodes) {
-                // Verificar se o campo "resource_uuid" contém o valor desejado
+                // Verificar se o campo "resource_uuid" da interscity confere com uuid e formatar dados
                 if ("9cf609af-3e7d-4bde-adad-f8b6f2dbe297".equals(node.get("resource_uuid").asText())) {
                   formattedString.append(node.toString()).append("\n"); // Adicione os dados JSON com uma nova linha
+				  //String resourceUUID = node.get("resource_uuid").asText();
+				  //String resourceValue =  node.get(fieldName) *Tenta guardar a string formatada sem criar o objeto
+           
                 }
             }
 
         	} catch (Exception e) {
           	    e.printStackTrace();
         	}
-			//Enviando dados apenas com determinado UUId
-	    	return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" + formattedString.toString();		
-	    }
+			
+			//Utils.(formattedString);
+	    	return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" 
+			+ formattedString.toString();		
+	    
+
+
+		}   
 
 		
+		@SuppressWarnings("deprecation")
 		public String errorInjectionFunction(String uuid) {
 			RestTemplate restTemplate = new RestTemplate();
 			String endpointUrl = "http://localhost:4000/interscity";  // Acessando LapesFI
