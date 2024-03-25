@@ -68,7 +68,7 @@ public class ResourceDiscoveryController {
 	    	//return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" +
 			//formattedString.toString();		
 	    
-
+          return response;
 
 		}   
 
