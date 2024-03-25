@@ -2,6 +2,8 @@ package com.example.kathiani.controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.example.kathiani.utils.Utilities;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpEntity;
@@ -60,9 +62,11 @@ public class ResourceDiscoveryController {
           	    e.printStackTrace();
         	}
 			
-			//Utils.(formattedString);
-	    	return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" 
-			+ formattedString.toString();		
+			//testar requisição post na interscity
+		   String response = Utilities.populateDatabase();
+
+	    	//return  "UUId do recurso cujo erro será injetado: " + uuid + "\n \n * E * Retorno do LapesFI com dados incorretos: \n" +
+			//formattedString.toString();		
 	    
 
 
@@ -93,7 +97,7 @@ public class ResourceDiscoveryController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			HttpEntity<String> requestEntity = new HttpEntity<>(jsonString, headers);
-	        ResponseEntity<String> responseEntity = restTemplate.postForEntity(endpointUrl, requestEntity, String.class);
+	        ResponseEntity<String> responseEntity = restTemplate.postForEntity(endpointUrl, requestEntity, String.class); //post
 
 	            if (responseEntity.getStatusCode().is2xxSuccessful()) {
 	                System.out.println("Erro injetado na capability!");
@@ -101,8 +105,10 @@ public class ResourceDiscoveryController {
 	                System.out.println("Erro ao injetar o erro nos dados: " + responseEntity.getStatusCodeValue());
 	            }
 				;
-            String responseErrorInjection = restTemplate.getForObject(endpointUrl, String.class);
+
+            String responseErrorInjection = restTemplate.getForObject(endpointUrl, String.class); //
 			return responseErrorInjection;
+
 	        }
 }
         
