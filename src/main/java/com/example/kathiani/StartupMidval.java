@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude = DataSourceAutoConfiguration.class)
-public class StartupApplication {
+public class StartupMidval {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StartupApplication.class, args);
+		SpringApplication.run(StartupMidval.class, args);
 	}
 
 	

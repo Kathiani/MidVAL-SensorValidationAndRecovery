@@ -1,3 +1,4 @@
+package com.example.kathiani.utils;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class Utilities {
+
      public String errorInjectionFunction(String uuid) {
 			RestTemplate restTemplate = new RestTemplate();
 			String endpointUrl = "http://localhost:4000/interscity";  // Acessando LapesFI
@@ -42,11 +44,11 @@ public class Utilities {
             String responseErrorInjection = restTemplate.getForObject(endpointUrl, String.class); //Obter resposta com dados injetados
 			return responseErrorInjection;
 
-	        }
+	    }
 
-			public static void computeMetrics(){
-				
-			}
+		public static void computeMetrics(){
+
+		}
 
 }
 

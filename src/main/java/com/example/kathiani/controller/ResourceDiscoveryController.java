@@ -1,5 +1,9 @@
 package com.example.kathiani.controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import com.example.kathiani.utils.Utilities;
@@ -20,9 +24,9 @@ import org.springframework.ui.Model;
 
 @RestController
 public class ResourceDiscoveryController {
-
-       
-	    public void controller(Model model) {
+        
+        @GetMapping("/midval")
+	    public String controller(Model model) {
 	    	//String url = "http://10.10.10.104:8000/catalog/resources";       
 	    	//String returnErrorData = errorInjectionFunction("9cf609af-3e7d-4bde-adad-f8b6f2dbe297");   //Cadastra erros em determinado recurso
 			
@@ -36,14 +40,13 @@ public class ResourceDiscoveryController {
 		    //formattedString.toString();		
 	    
             //return validatedSensorResponse.toString();
-
+            return "MidVAL up";
 		}   
 	
 
-        @GetMapping("/midval/validate")
-		public static String validateData(String returnErrorData) {
-            StringBuilder formattedString = new StringBuilder();
-            //Tentando acessar lotes de dados
+        @PostMapping("/midval/validate")
+		public static void validateData(@RequestBody String data) {
+           /* StringBuilder formattedString = new StringBuilder();
 			try {
 				ObjectMapper objectMapper = new ObjectMapper();
 				JsonNode[] jsonNodes = objectMapper.readValue(returnErrorData, JsonNode[].class);
@@ -59,7 +62,9 @@ public class ResourceDiscoveryController {
           	    e.printStackTrace();
         	}
 
-			return formattedString.toString();
+			return formattedString.toString();  */ 
+            System.out.println(data);
+			//return data;
 
 		}
 }
