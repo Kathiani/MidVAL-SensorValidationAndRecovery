@@ -63,8 +63,7 @@ public class ResourceDiscoveryController {
         	}
 
 			return formattedString.toString();  */ 
-            System.out.println(data);
-			//return data;
+            //return data;
 
 		}
 }
