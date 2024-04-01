@@ -1,27 +1,28 @@
 package com.example.kathiani.service;
 import com.example.kathiani.utils.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.json.JSONArray;
 
-
+@RestController
 public class DataValidationUtil {
-   	public static void dataValidate(String data) {
+   	public static String dataValidate(String data) {
         boolean isValid1  = initialValidation(data);
+        //boolean isvalid2 = validateByHistorical(data);
 
-       // if (isValid1==true){
-       //     return data;
-       //  }else{
-       //     String dataRetrieved =  DataRecoveryUtil.recoverData(data);
-       //     return dataRetrieved;
-       //} 
+        if (isValid1==true){
+            return "Dado desatualizado";
+            //return data;
+        }else{
+            return "Dado atualizado";
+            //String dataRetrieved =  DataRecoveryUtil.recoverData(data);
+            //return dataRetrieved;
+       } 
     }
 
 
@@ -29,8 +30,7 @@ public class DataValidationUtil {
          LocalDateTime recentDate = null;
         try {
             JSONObject jsonObject = new JSONObject(data);
-            JSONArray resourcesArray = jsonObject.getJSONArray("resources");
-           
+            JSONArray resourcesArray = jsonObject.getJSONArray("resources");         
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
             
             for (int i = 0; i < resourcesArray.length(); i++) {
@@ -41,6 +41,8 @@ public class DataValidationUtil {
                     JSONObject monitoringDataObject = environmentMonitoringArray.getJSONObject(j);
                     String dateString = monitoringDataObject.getString("date");
                     LocalDateTime dateValue = LocalDateTime.parse(dateString, formatter);
+                    if (j==0)
+                        recentDate = dateValue;                   
                     if (dateValue.isAfter(recentDate)) {
                         recentDate = dateValue;
                     }
@@ -60,7 +62,7 @@ public class DataValidationUtil {
 			
 	}
 
-    public static boolean  validateByHistorical(String data){ 
+    public static boolean validateByHistorical(String data){ 
         StringBuilder formattedString = new StringBuilder();
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -80,26 +82,9 @@ public class DataValidationUtil {
         return true;   //alterar
     }
 
-
-
-
-    @PostMapping("/midval/validate")  //dado enviado diretamente para validação (plataforma quanto app)
-	public static void dataValidateviaRequest(@RequestBody String data) {
-        StringBuilder formattedString = new StringBuilder();
-		try {
-			ObjectMapper objectMapper = new ObjectMapper();
-			JsonNode[] jsonNodes = objectMapper.readValue(data, JsonNode[].class);
-            for (int i = 0; i < jsonNodes.length; i+=3) {
-           	JsonNode node = jsonNodes[i];
-            formattedString.append(node.get(i).toString()).append("\n"); // Adicione os dados JSON com uma nova linha	
-			formattedString.append(node.get(i+1).toString()).append("\n");
-			formattedString.append(node.get(i+2).toString()).append("\n");
-		}
-        } catch (Exception e) {
-          	    e.printStackTrace();
-        }
+   
 
 			
-	}
-
 }
+
+
