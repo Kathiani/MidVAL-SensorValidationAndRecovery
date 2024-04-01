@@ -49,6 +49,15 @@ public class Utilities {
 
 		}
 
+
+		public static LocalDateTime currentDate(){
+		    LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            String currentTime = now.format(formatter);
+			LocalDateTime currentdate = LocalDateTime.parse(currentTime, formatter);
+            return currentdate;
+
+		}
 }
 
 		
