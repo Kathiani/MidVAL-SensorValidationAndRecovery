@@ -16,10 +16,10 @@ public class DataValidationUtil {
         //boolean isvalid2 = validateByHistorical(data);
 
         if (isValid1==true){
-            return "Dado desatualizado";
-            //return data;
-        }else{
             return "Dado atualizado";
+            //return data;
+        }else{ 
+            return "Dado desatualizado";
             //String dataRetrieved =  DataRecoveryUtil.recoverData(data);
             //return dataRetrieved;
        } 

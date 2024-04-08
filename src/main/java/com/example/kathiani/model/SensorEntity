@@ -1,0 +1,42 @@
+package com.example.kathiani.model;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.data.mongodb.core.MongoTemplate;
+
+
+@Service
+public class SensorEntity{
+
+    @Autowired
+    public static MongoTemplate mongoTemplate;
+
+    //create
+    public static void createValidDataSensor(String dados, String collection) {
+          if (!mongoTemplate.collectionExists(collection)) {
+            mongoTemplate.createCollection(collection);
+        }
+        
+        // Save data
+        mongoTemplate.save(dados, collection);
+    }
+
+ 
+    //get 
+    public static String getValidDataSensor(String id, String collection) {
+          return mongoTemplate.findById(id, String.class, collection);
+    }
+
+
+    //update
+      public static void updateValidDataSensor(String id, String dados, String collection) {
+        mongoTemplate.save(mongoTemplate.findById(id, String.class, collection), collection);
+    }
+
+
+    //delete
+    public static void deleteValidDataSensor(String id, String collection) {
+        mongoTemplate.remove(mongoTemplate.findById(id, String.class, collection), collection);
+    }
+
+
+}

@@ -1,5 +1,6 @@
 package com.example.kathiani.controller;
 import com.example.kathiani.service.*;
+import com.example.kathiani.model.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
@@ -16,8 +17,15 @@ public class ResourceDiscovererController{
     	String uuid = "9cf609af-3e7d-4bde-adad-f8b6f2dbe297";   // *determinado uuid por enquanto 
     	String endpointInterSCity = "http://10.10.10.104:8000/collector/resources/" + uuid + "/data";  
     	String responseDataResource = restTemplate.getForObject(endpointInterSCity, String.class);        
-		String validData = DataValidationUtil.dataValidate(responseDataResource);
-	    return validData;
+		//String validData = DataValidationUtil.dataValidate(responseDataResource);
+		//SensorDatabase.createDatabase();
+		//SensorEntity.createValidDataSensor(validData, "validData");
+	   // return validData; 
+	   //SensorEntity.saveValidData(responseDataResource);
+	   //SensorEntity.readValidData("teste");
+	   //SensorEntity.updateValidData(uuid, "teste");
+	   SensorEntity.deleteValidData("teste");
+	   return "teste";
 	}
 
 

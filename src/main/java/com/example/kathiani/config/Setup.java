@@ -1,6 +1,8 @@
 package com.example.kathiani.config;
 import org.springframework.web.bind.annotation.*;
 import com.example.kathiani.controller.ResourceDiscovererController;
+import com.example.kathiani.service.DataValidationUtil;
+
 import org.springframework.ui.Model;
 
 
@@ -15,8 +17,10 @@ public class Setup {
 
 	@GetMapping("/midval/search-validate")  // buscar dado e validar
 		public String dataSearching(){
-            String validData =  ResourceDiscovererController.dataSearching();
-			return validData;
+            String responseDataResource =  ResourceDiscovererController.dataSearching();
+			//String validData = DataValidationUtil.dataValidate(responseDataResource);
+
+			return "teste";
 		}
 	
 	@PostMapping("/midval/validate")  // apenas validar dado enviado diretamente para validação (plataforma quanto app)
