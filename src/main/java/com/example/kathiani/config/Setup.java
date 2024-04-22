@@ -17,16 +17,14 @@ public class Setup {
 
 	@GetMapping("/midval/search-validate")  // buscar dado e validar
 		public String dataSearching(){
-            String responseDataResource =  ResourceDiscovererController.dataSearching();
-			//String validData = DataValidationUtil.dataValidate(responseDataResource);
-
-			return "teste";
+            String responseValidData =  ResourceDiscovererController.searchValidate();
+			return responseValidData;
 		}
 	
 	@PostMapping("/midval/validate")  // apenas validar dado enviado diretamente para validação (plataforma quanto app)
 		public String validateViaRequest(@RequestBody String data){
-            String validData =  ResourceDiscovererController.dataValidateviaRequest(data);
-			return validData;
+            String responseValidData =  ResourceDiscovererController.dataValidateviaRequest(data);
+			return responseValidData;
 		}
 	
 }

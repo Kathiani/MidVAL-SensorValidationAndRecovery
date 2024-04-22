@@ -8,8 +8,6 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Filters;
-import com.mongodb.client.model.UpdateOptions;
-import com.mongodb.client.result.UpdateResult;
 import java.util.List;
 import java.util.Arrays;
 import org.bson.Document;
@@ -23,6 +21,8 @@ import org.springframework.stereotype.Service;
 public class SensorEntity {
 	public static MongoClient mongoClient = MongoClients.create("mongodb://localhost:27017");
 	public static MongoDatabase database = mongoClient.getDatabase("dataresources");
+	public static String collectionname = "sensortest";
+	public static MongoCollection<Document> collection = database.getCollection(collectionname);
 
 	public static void createDatabase(){
 		if(!collectionExists(database, "sensortest")) {
@@ -44,7 +44,7 @@ public class SensorEntity {
     }
 
     public static void saveValidData(String data){
-		MongoCollection<Document> collection = database.getCollection("sensortest");
+		MongoCollection<Document> collection = database.getCollection(collectionname);
 		/*Document document = new Document("campo1", 2)
 							.append("campo2", 2)
 							.append("campo3", 3);*/
@@ -55,7 +55,7 @@ public class SensorEntity {
 
 
 	public static String readValidData(String uuid){
-        MongoCollection<Document> collection = database.getCollection("sensortest");
+        MongoCollection<Document> collection = database.getCollection(collectionname);
 		Document filtro = new Document("_id", new ObjectId("66133babd8499f6cc16db967"));
 		Document documento = collection.find(filtro).first();
 		if (documento != null) {
@@ -69,9 +69,8 @@ public class SensorEntity {
 	}
 
 	public static void updateValidData(String uuid, String newData){
-		MongoCollection<Document> collection = database.getCollection("sensortest");
+		MongoCollection<Document> collection = database.getCollection(collectionname);
 	   
-		// UUID específico do documento que você deseja atualizar
 		uuid = "9cf609af-3e7d-4bde-adad-f8b6f2dbe297";
 
 		// Define o filtro para identificar o documento com o UUID especificado
@@ -90,14 +89,14 @@ public class SensorEntity {
 
 		// Verifica se a atualização foi bem-sucedida
 		if (result.getModifiedCount() > 0) {
-			System.out.println("Documento atualizado com sucesso.");
+			System.out.println("Document was updated.");
 		} else {
-			System.out.println("Nenhum documento foi atualizado.");
+			System.out.println("None document was updated.");
 		}
     }
 
 	public static void deleteValidData(String uuid){
-		MongoCollection<Document> collection = database.getCollection("sensortest");
+		MongoCollection<Document> collection = database.getCollection(collectionname);
 		Document filtro = new Document("campo1", 2);
         DeleteResult result = collection.deleteOne(filtro);
 		System.out.println(result);
