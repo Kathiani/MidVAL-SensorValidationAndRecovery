@@ -1,0 +1,91 @@
+08:56:34.800 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+08:56:34.825 [main] INFO  c.e.kathiani.config.StartupMidval - Starting StartupMidval using Java 17.0.10 with PID 852540 (/home/kathiani/Recovery Approach Smart Apps/MidVAL-SensorValidationAndRecovery/target/classes started by kathiani in /home/kathiani/Recovery Approach Smart Apps)
+08:56:34.825 [main] INFO  c.e.kathiani.config.StartupMidval - No active profile set, falling back to 1 default profile: "default"
+08:56:35.114 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+08:56:35.114 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+08:56:35.122 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 MongoDB repository interfaces.
+08:56:35.333 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+08:56:35.338 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+08:56:35.338 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+08:56:35.339 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.4]
+08:56:35.394 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+08:56:35.395 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 545 ms
+08:56:35.609 [main] INFO  org.mongodb.driver.client - MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.8.1"}, "os": {"type": "Linux", "name": "Linux", "architecture": "amd64", "version": "5.15.0-105-generic"}, "platform": "Java/Private Build/17.0.10+7-Ubuntu-120.04.1"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@420cd102]}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+08:56:35.620 [cluster-ClusterId{value='6627a1f3cd69fd34ac59209f', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=9474704}
+08:56:35.723 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+08:56:35.725 [main] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+08:56:35.728 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+08:56:35.728 [main] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+08:56:35.735 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+08:56:35.735 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Destroying ProtocolHandler ["http-nio-8080"]
+08:56:35.739 [main] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+08:56:35.746 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+08:56:43.691 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating availability and update 
+
+08:56:43.692 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+08:56:44.714 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating availability and update 
+
+08:56:44.716 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+08:56:45.737 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating availability and update 
+
+08:56:45.739 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+08:56:45.739 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+08:56:46.760 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+08:56:46.760 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+08:56:47.797 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+08:56:47.798 [http-nio-8080-exec-5] INFO  c.e.k.service.DataValidationUtil - Validation in: -4.106ms
+09:10:48.041 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+09:10:48.066 [main] INFO  c.e.kathiani.config.StartupMidval - Starting StartupMidval using Java 17.0.10 with PID 857081 (/home/kathiani/Recovery Approach Smart Apps/MidVAL-SensorValidationAndRecovery/target/classes started by kathiani in /home/kathiani/Recovery Approach Smart Apps)
+09:10:48.067 [main] INFO  c.e.kathiani.config.StartupMidval - No active profile set, falling back to 1 default profile: "default"
+09:10:48.358 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+09:10:48.358 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+09:10:48.366 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 MongoDB repository interfaces.
+09:10:48.602 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+09:10:48.612 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+09:10:48.613 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+09:10:48.613 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.4]
+09:10:48.668 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+09:10:48.669 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 578 ms
+09:10:48.909 [main] INFO  org.mongodb.driver.client - MongoClient with metadata {"driver": {"name": "mongo-java-driver|sync|spring-boot", "version": "4.8.1"}, "os": {"type": "Linux", "name": "Linux", "architecture": "amd64", "version": "5.15.0-105-generic"}, "platform": "Java/Private Build/17.0.10+7-Ubuntu-120.04.1"} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, streamFactoryFactory=null, commandListeners=[], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, EnumCodecProvider{}, com.mongodb.Jep395RecordCodecProvider@420cd102]}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='30000 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, sendBufferSize=0}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, sendBufferSize=0}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=JAVA_LEGACY, serverApi=null, autoEncryptionSettings=null, contextProvider=null}
+09:10:48.922 [cluster-ClusterId{value='6627a548acee6d69b95d91a8', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, minWireVersion=0, maxWireVersion=13, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=11400866}
+09:10:49.042 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+09:10:49.051 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+09:10:49.056 [main] INFO  c.e.kathiani.config.StartupMidval - Started StartupMidval in 1.15 seconds (process running for 1.434)
+09:10:50.299 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+09:10:50.299 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+09:10:50.300 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+09:10:50.345 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - 
+Validating availability and update 
+09:10:50.349 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+09:10:51.373 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - 
+Validating availability and update 
+09:10:51.374 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+09:10:52.397 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - 
+Validating availability and update 
+09:10:52.399 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+09:10:52.399 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+09:10:53.421 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+09:10:53.422 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Retrying an up-to-date-value!
+09:10:54.444 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Validating values by historical values 
+
+09:10:54.447 [http-nio-8080-exec-1] INFO  c.e.k.service.DataValidationUtil - Validation in: -4.099ms

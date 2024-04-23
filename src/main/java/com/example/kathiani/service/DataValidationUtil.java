@@ -4,48 +4,64 @@ import org.springframework.web.bind.annotation.RestController;
 import org.json.JSONObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.lang.Thread;
 import org.json.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @RestController
 public class DataValidationUtil {
+    private static final Logger logger = LoggerFactory.getLogger(DataValidationUtil.class);
+
    	public static String dataValidate(String data) {
+        logger.info("***Starting data validation***");
+        try {
         long initialTime = System.nanoTime();
-        int retry = 0;  // tentativas de obtenção de novo dado
+        int retry = 0; int nmaxretry = 2;    // tentativas de obtenção de novo dado
         boolean isvalid1, isvalid2 = false;
 
         isvalid1  = validationByDate(data);          
-        while((retry < 3) && (isvalid1!=true)){
+        while((retry < nmaxretry) && (isvalid1!=true)){
+            logger.info("Retrying an up-to-date-value!");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("The thread was interrupted");
+            }
             data = DataRecoveryUtil.retry();
             isvalid1  = validationByDate(data);   
             retry = retry + 1;
         } 
 
-        retry = 0;
+        retry = 0;   // atualizando número de tentativas
 
         isvalid2 = validateByHistorical(data);
-        while((retry < 3) && (isvalid2!=true)){
+        while((retry < nmaxretry) && (isvalid2!=true)){
+            logger.info("Retrying an up-to-date-value!");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("The thread was interrupted");
+            }
             data = DataRecoveryUtil.retry();
             isvalid1  = validateByHistorical(data);   
             retry = retry + 1;
         } 
 
         long finalTime = System.nanoTime();
-        double totalTime = (double) ((initialTime - finalTime) / 1_000_000)/1000;  // em milissegundos
-
-        /*if (isValid1==true){
-            return "Dado atualizado";
-            //return data;
-        }else{ 
-            return "Dado desatualizado";
-            //String dataRetrieved =  DataRecoveryUtil.recoverData(data);
-            //return dataRetrieved;
-       }*/
-       
-       return "testando retry numero de tentativas: " + retry + " em " + totalTime;
+        double totalTime = (double) ((initialTime - finalTime) / 1_000_000)/1000;  // tempo de processamento em milissegundos
+        logger.info("Validation in: " + totalTime + "ms");
+        if ((isvalid1==true)&&(isvalid2==true))      
+            return data;
+        else{ 
+            return "Data is not ready!";
+       }
+           
     }
 
 
     public static boolean validationByDate(String data){ 
+       logger.info("Validating availability and update\n");
         LocalDateTime recentDate = null;
         try {
             JSONObject jsonObject = new JSONObject(data);
@@ -81,6 +97,7 @@ public class DataValidationUtil {
 	}
 
     public static boolean validateByHistorical(String data){ 
+        logger.info("Validating values by historical values \n");
         JSONObject jsonObject = new JSONObject(data);  
         int intervalAnalysis = 2;  // batches of analysis from historical
         double media = 0; double tolerance = 3;
@@ -123,9 +140,9 @@ public class DataValidationUtil {
         JSONObject environmentMonitoring = firstResource.getJSONObject("capabilities").getJSONArray("environment_monitoring").getJSONObject(0);
         int temperature2 = environmentMonitoring.getInt("temperature");
         if (temperature2 < (media-tolerance) || temperature2 > (media-tolerance))
-            return false;//"out of the range of last temperatures";
+            return false;    //"out of the range of last temperatures";
         else
-            return true;//"regular values";
+            return true;     //"regular values";
   
     }
 
