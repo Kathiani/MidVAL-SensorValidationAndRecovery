@@ -1,5 +1,6 @@
 package com.example.kathiani.service;
 
+
 public class PreProcessing {
     // obter array com media movel
     public static double[] movingAverage(double[] temperatures){      //suavizando array de valores elimina pesos autos ou baixos

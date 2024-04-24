@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class ResourceDiscovererController{
-
-   
+ 
 	public static String searchValidate(){ // busca dado e valida  // *a definir info pela qual dado será buscado na plataforma
         RestTemplate restTemplate = new RestTemplate();
     	String uuid = "9cf609af-3e7d-4bde-adad-f8b6f2dbe297";   // *determinado uuid por enquanto 

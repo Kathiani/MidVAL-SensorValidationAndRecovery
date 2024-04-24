@@ -52,6 +52,7 @@ public class DataValidationUtil {
         if ((isvalid1==true)&&(isvalid2==true))      
             return data;
         else{ 
+            data =  DataRecoveryUtil.recoverbyMovingAvarage(data);
             return "Data is not ready!";
        }
            
@@ -97,12 +98,11 @@ public class DataValidationUtil {
     public static boolean validateByHistoricalAvarage(String data) { 
         logger.info("Validating values by average \n");
         JSONObject jsonObject = new JSONObject(data);  
-    
         double tolerance = 2;  // Tolerância para validação
         JSONArray resourcesArray = jsonObject.getJSONArray("resources");  // Obtém a matriz "resources"
+
         try {
             double[] temperatures = new double[resourcesArray.length()];
-  
             JSONObject resource = resourcesArray.getJSONObject(0);
                 
             // Obtém o array "environment_monitoring" dentro do recurso atual
@@ -118,14 +118,12 @@ public class DataValidationUtil {
         
             // Calcula a média móvel de 3 períodos e armazena em um novo array
             double[] movingAverages = PreProcessing.movingAverage(temperatures);
-
             double sum = 0;
             for (double average : movingAverages) {
                 sum += average;
             }
             double meanTemp = sum / movingAverages.length;
-
-                
+            
             // Comparar a temperatura atual com a media
             // Se estiver dentro da tolerância, considera-se válido
             double currentTemperature = temperatures[temperatures.length - 1];
