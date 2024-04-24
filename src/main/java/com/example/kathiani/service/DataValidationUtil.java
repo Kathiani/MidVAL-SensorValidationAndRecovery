@@ -14,15 +14,14 @@ public class DataValidationUtil {
     private static final Logger logger = LoggerFactory.getLogger(DataValidationUtil.class);
 
    	public static String dataValidate(String data) {
-        logger.info("***Starting data validation***");
-        try {
+        logger.info("\n***Starting data validation***");
+        
         long initialTime = System.nanoTime();
         int retry = 0; int nmaxretry = 2;    // tentativas de obtenção de novo dado
         boolean isvalid1, isvalid2 = false;
 
         isvalid1  = validationByDate(data);          
         while((retry < nmaxretry) && (isvalid1!=true)){
-            logger.info("Retrying an up-to-date-value!");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -35,16 +34,15 @@ public class DataValidationUtil {
 
         retry = 0;   // atualizando número de tentativas
 
-        isvalid2 = validateByHistorical(data);
+        isvalid2 = validateByHistoricalAvarage(data);
         while((retry < nmaxretry) && (isvalid2!=true)){
-            logger.info("Retrying an up-to-date-value!");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 System.out.println("The thread was interrupted");
             }
             data = DataRecoveryUtil.retry();
-            isvalid1  = validateByHistorical(data);   
+            isvalid1  = validateByHistoricalAvarage(data);   
             retry = retry + 1;
         } 
 
@@ -96,18 +94,15 @@ public class DataValidationUtil {
 			
 	}
 
-    public static boolean validateByHistorical(String data){ 
-        logger.info("Validating values by historical values \n");
+    public static boolean validateByHistoricalAvarage(String data) { 
+        logger.info("Validating values by average \n");
         JSONObject jsonObject = new JSONObject(data);  
-        int intervalAnalysis = 2;  // batches of analysis from historical
-        double media = 0; double tolerance = 3;
+    
+        double tolerance = 2;  // Tolerância para validação
         JSONArray resourcesArray = jsonObject.getJSONArray("resources");  // Obtém a matriz "resources"
-	    try {
-            int[] temperaturas = new int[intervalAnalysis];
-            int cont = 0;
-           
-         
-            // Obtém o objeto de recurso atual
+        try {
+            double[] temperatures = new double[resourcesArray.length()];
+  
             JSONObject resource = resourcesArray.getJSONObject(0);
                 
             // Obtém o array "environment_monitoring" dentro do recurso atual
@@ -115,41 +110,45 @@ public class DataValidationUtil {
                     .getJSONObject("capabilities")
                     .getJSONArray("environment_monitoring");
 
-            // Itera sobre os primeiros 'quantidade' elementos de "environment_monitoring" e obtém os valores de temperatura
-            for (int j = 0; j < Math.min(environmentMonitoringArray.length(), intervalAnalysis); j++) {
-                JSONObject elemento = environmentMonitoringArray.getJSONObject(j);
-                int temperaturaAtual = elemento.getInt("temperature");
-                temperaturas[cont] = temperaturaAtual;
-                cont++;
+            // Extrai os valores de temperatura de "environment_monitoring" e armazena em um array
+            for (int j = 0; j < environmentMonitoringArray.length(); j++) {
+                JSONObject element = environmentMonitoringArray.getJSONObject(j);
+                temperatures[j] = element.getInt("temperature");
             }
-           
-            int soma = 0;
-            for (int temperatura : temperaturas) {
-                soma += temperatura;
+        
+            // Calcula a média móvel de 3 períodos e armazena em um novo array
+            double[] movingAverages = PreProcessing.movingAverage(temperatures);
+
+            double sum = 0;
+            for (double average : movingAverages) {
+                sum += average;
             }
-            media = (double) soma / cont;  //calculate media
-           
-            
-        } catch (Exception e){
+            double meanTemp = sum / movingAverages.length;
+
+                
+            // Comparar a temperatura atual com a media
+            // Se estiver dentro da tolerância, considera-se válido
+            double currentTemperature = temperatures[temperatures.length - 1];
+            if (Math.abs(currentTemperature - meanTemp) <= tolerance) {
+                return true;
+            }
+            return false;
+        
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
 
-        // Obtém o primeiro objeto dentro do array "resources"
-        JSONObject firstResource = jsonObject.getJSONArray("resources").getJSONObject(0);
-        JSONObject environmentMonitoring = firstResource.getJSONObject("capabilities").getJSONArray("environment_monitoring").getJSONObject(0);
-        int temperature2 = environmentMonitoring.getInt("temperature");
-        if (temperature2 < (media-tolerance) || temperature2 > (media-tolerance))
-            return false;    //"out of the range of last temperatures";
-        else
-            return true;     //"regular values";
-  
     }
+
+  
+}
+
 
         
 
        
-}
+
 
    
 
