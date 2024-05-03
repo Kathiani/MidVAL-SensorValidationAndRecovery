@@ -1,13 +1,13 @@
 package com.example.kathiani.service;
-import com.example.kathiani.utils.*;
-import org.springframework.web.bind.annotation.RestController;
-import org.json.JSONObject;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.lang.Thread;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.kathiani.utils.Utilities;
 
 @RestController
 public class DataValidationUtil {
@@ -16,8 +16,9 @@ public class DataValidationUtil {
    	public static String dataValidate(String data) {
         logger.info("\n***Starting data validation***");
         
+        String newData = null;
         long initialTime = System.nanoTime();
-        int retry = 0; int nmaxretry = 2;    // tentativas de obtenção de novo dado
+        int retry = 0, nmaxretry = 2;    // tentativas de obtenção de novo dado
         boolean isvalid1, isvalid2 = false;
 
         isvalid1  = validationByDate(data);          
@@ -34,7 +35,7 @@ public class DataValidationUtil {
 
         retry = 0;   // atualizando número de tentativas
 
-        isvalid2 = validateByHistoricalAvarage(data);
+        //isvalid2 = validateByHistoricalAverage(data);
         while((retry < nmaxretry) && (isvalid2!=true)){
             try {
                 Thread.sleep(1000);
@@ -42,7 +43,7 @@ public class DataValidationUtil {
                 System.out.println("The thread was interrupted");
             }
             data = DataRecoveryUtil.retry();
-            isvalid1  = validateByHistoricalAvarage(data);   
+            //isvalid1  = validateByHistoricalAverage(data);   
             retry = retry + 1;
         } 
 
@@ -52,8 +53,8 @@ public class DataValidationUtil {
         if ((isvalid1==true)&&(isvalid2==true))      
             return data;
         else{ 
-            data =  DataRecoveryUtil.recoverbyMovingAvarage(data);
-            return "Data is not ready!";
+            newData =  DataRecoveryUtil.recoverbyMovingAverage(data);
+            return newData;
        }
            
     }
@@ -70,7 +71,7 @@ public class DataValidationUtil {
             for (int i = 0; i < resourcesArray.length(); i++) {
                 JSONObject resourceObject = resourcesArray.getJSONObject(i);
                 JSONObject capabilitiesObject = resourceObject.getJSONObject("capabilities");
-                JSONArray environmentMonitoringArray = capabilitiesObject.getJSONArray("environment_monitoring");
+                JSONArray environmentMonitoringArray = capabilitiesObject.getJSONArray("environment_monitor");
                 for (int j = 0; j < environmentMonitoringArray.length(); j++) {
                     JSONObject monitoringDataObject = environmentMonitoringArray.getJSONObject(j);
                     String dateString = monitoringDataObject.getString("date");
@@ -95,7 +96,7 @@ public class DataValidationUtil {
 			
 	}
 
-    public static boolean validateByHistoricalAvarage(String data) { 
+    public static boolean validateByHistoricalAverage(String data) { 
         logger.info("Validating values by average \n");
         JSONObject jsonObject = new JSONObject(data);  
         double tolerance = 2;  // Tolerância para validação
@@ -108,28 +109,30 @@ public class DataValidationUtil {
             // Obtém o array "environment_monitoring" dentro do recurso atual
             JSONArray environmentMonitoringArray = resource
                     .getJSONObject("capabilities")
-                    .getJSONArray("environment_monitoring");
+                    .getJSONArray("environment_monitor");
 
             // Extrai os valores de temperatura de "environment_monitoring" e armazena em um array
-            for (int j = 0; j < environmentMonitoringArray.length(); j++) {
+            for (int j = 1; j < environmentMonitoringArray.length(); j++) {
                 JSONObject element = environmentMonitoringArray.getJSONObject(j);
-                temperatures[j] = element.getInt("temperature");
+                temperatures[j] = element.getDouble("temperature");
             }
         
             // Calcula a média móvel de 3 períodos e armazena em um novo array
             double[] movingAverages = PreProcessing.movingAverage(temperatures);
             double sum = 0;
-            for (double average : movingAverages) {
-                sum += average;
+            for (int j = 0; j < movingAverages.length; j++) {
+                sum += movingAverages[j];
             }
+            
             double meanTemp = sum / movingAverages.length;
             
             // Comparar a temperatura atual com a media
             // Se estiver dentro da tolerância, considera-se válido
-            double currentTemperature = temperatures[temperatures.length - 1];
+            double currentTemperature =  resource.getInt("temperature");
             if (Math.abs(currentTemperature - meanTemp) <= tolerance) {
                 return true;
             }
+           
             return false;
         
         } catch (Exception e) {

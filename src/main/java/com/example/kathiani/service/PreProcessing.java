@@ -7,7 +7,7 @@ public class PreProcessing {
 
         int window = 3;  // Número de janelas para a média móvel
         double[] movingAverages = new double[temperatures.length - window + 1];
-        for (int i = 0; i < movingAverages.length; i++) {
+        for (int i = 1; i < movingAverages.length; i++) {
             double sum = 0;
             for (int j = i; j < i + window; j++) {
                 sum += temperatures[j];
